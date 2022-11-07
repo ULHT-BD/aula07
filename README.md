@@ -4,17 +4,17 @@ Bom trabalho!
 
 [0. Requisitos](#0-requisitos)
 
-[1. CREATE](#1-CREATE)
+[1. CREATE TABLE](#1-create-table)
 
-[2. Conversão de Tipos de Dados](#2-conversão-de-tipos-de-dados)
+[2. Tipos de Dados](#2-tipos-de-dados)
 
-[3. Funções de Agregação](#3-funções-de-agregação)
+[3. Restrições de Integridade](#3-restrições-de-integridade)
 
-[4. GROUP BY](#4-group-by)
+[4. DESCRIBE and SHOW CREATE TABLE](#4-describe-and-show-create-table)
 
-[5. HAVING](#5-having)
+[5. ALTER TABLE](#5-alter-table)
 
-[6. Operações UNION, INTERSECT e MINUS](#6-operações-union-intersect-e-minus)
+[6. SELECT INTO](#6-select-into)
 
 [7. Trabalho de Casa](#7-trabalho-de-casa)
 
@@ -30,65 +30,46 @@ Caso já tenha o docker pode iniciá-lo usando o comando ```docker start mysgbd`
 
 Deve também ter o cliente DBeaver.
 
-## 1. Função IF e CASE
-Como vimos na aula anterior, podemos usar a função ```IFNULL``` para testar a condição se um dado valor é ```NULL``` e devolver caso a comparação seja verdadeira, então retornamos outro valor. Podemos usar a função ```IF``` para testar outras condições sendo assim possivel devolver valores diferentes na função de acordo com o resultado do teste da condição. 
+## 1. CREATE TABLE
+A cláusula ```CREATE TABLE``` permite criar uma nova relação de acordo com o esquema definido, esquema este que determina o conjunto de valores válidos para o modelo de dados a representar.
 
-A sintaxe é 
+A sintaxe geral é 
 ``` sql
-IF(<<condição>>, <<valor-se-verdadeiro>>, <<valor-se-falso>>)
+CREATE TABLE nome_relacao (
+ definicao_coluna1,
+ definicao_coluna2,
+ ...,
+ restricoes_integridade
+)
 ```
 
-Por exemplo:
-
+onde cada definição de coluna é definida por
 ``` sql
- SELECT IF(idade >=18, 'Maior de Idade', 'Menor de Idade') FROM estudante;
-```
-
-A função CASE permite testar um conjunto de várias condições e devolver valores diferentes segundo resultado do teste. O valor devolvido é o retornado pela primeira condição que teste verdadeiro. A sintaxe pode assumir duas formulações:
-
-1. testar vários valores para uma condição
-```
-CASE condição
- WHEN valor-1 THEN resultado-1
- WHEN valor-2 THEN resultado-2
- WHEN valor-N THEN resultado-N
- ELSE resultado
-END;
-```
-Exemplo:
-``` sql
-SELECT
- CASE ano_curso
-  WHEN 1 THEN 'Caloiro'
-  WHEN 3 THEN 'Finalista de Licenciatura'
-  WHEN 5 THEN 'Finalista de Mestrado'
-  ELSE 'Inscrito em anos intermédios'
- END
-FROM
- estudante;
-```
-
-2. testar várias condições diferentes
-```
-CASE
- WHEN condição-1 THEN resultado-1
- WHEN condição-2 THEN resultado-2
- WHEN condição-N THEN resultado-N
- ELSE resultado
-END;
+nome_coluna tipo_dados [restricoes_integridade]
 ```
 
 Exemplo:
 ``` sql
-SELECT
- CASE
-  WHEN nota_final >= 10 THEN 'Aprovado'
-  WHEN nota_final >=8 THEN 'Exame Oral'
-  ELSE 'Reprovado'
- END
-FROM
- estudante;
+CREATE TABLE pessoa (
+  nif CHAR(9),
+  nome VARCHAR(50),
+  PRIMARY KEY(nif)
+);
 ```
+
+## 2. Tipo de Dados
+Nas aulas anteriores
+
+## 3. Restrições de Integridade
+Restrições de integridade são um conjunto de regras que queremos impôr ao nosso modelo de dados para garantir que o modelo de dados é válido (e.g. qualquer cidadão possui obrigatóriamente um número de cartão de cidadão, um número único e diferente para cada cidadão). Estas regras devem ser codificadas em SQL de forma a impôr a sua obrigatoriedade durante inserção ou manipulação dos dados.
+
+Importante referir quatro restrições de integridade que podemos impôr em SQL:
+|Restrição|SQL|Descrição|
+|---------|---|---------|
+|Primary Key|```PRIMARY KEY(col1, col2, ...)```|Chave primária, é um atributo obrigatório e único para cada tuplo. É o atributo que identifica de forma única cada um dos tuplos|
+|Unique Key|```UNIQUE(col)```|Chave candidata, atributo cujos valores são obrigatoriamente únicos|
+|Not Null|```NOT NULL```|Um valor tem de ser obrigatoriamente atribuido à coluna em questão. Não pode ser ```NULL```|
+|Check|```CHECK(condição)```|O valor na coluna deve respeitar a condição indicada|
 
 ### Exercícios
 Para cada uma das alíneas seguintes, escreva a query que permite obter:
@@ -98,6 +79,17 @@ Para cada uma das alíneas seguintes, escreva a query que permite obter:
 
 ## 2. Conversão de Tipos de Dados
 Verificámos, nas aulas anteriores, que podemos usar em SQL vários tipos de dados (e.g. texto, numérico, data). O SQL disponibiliza funções que permitem efetuar conversões entre os tipos de dados.
+
+A sintaxe é 
+``` sql
+CREATE TABLE nome_relacao (
+ definicao_coluna1,
+ definicao_coluna2,
+ ...,
+ restricoes_integridade
+)
+```
+
 
 Podemos usar os operadores:
 |Função|Descrição|Exemplo|
