@@ -1,10 +1,10 @@
 # aula07
-Nas aulas anteriores utilizámos a linguagem SQL para efetuar consultas de dados, recuperando dados e efetuando operações sobre estes de forma a obter a informação desejada. Nesta aula olhamos para a cláusula CREATE que permite criar novas relações.
+Nas aulas anteriores utilizámos a linguagem SQL para efetuar consultas de dados, recuperando dados e efetuando operações sobre estes de forma a obter a informação desejada. Nesta aula olhamos para a cláusula CREATE e respetica sintaxe, um comando que nos permite criar novas relações de acordo com o esquema definido.
 Bom trabalho!
 
 [0. Requisitos](#0-requisitos)
 
-[1. Função IF e CASE](#1-função-if-e-case)
+[1. CREATE](#1-CREATE)
 
 [2. Conversão de Tipos de Dados](#2-conversão-de-tipos-de-dados)
 
