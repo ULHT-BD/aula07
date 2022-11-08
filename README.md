@@ -117,10 +117,10 @@ Para cada uma das alíneas seguintes, escreva a query que permite criar e teste 
 3. A relação veiculo(matricula, tipo, marca, modelo, ano), onde a marca pode ser VW, Renault, Tesla ou BMW e tipo pode ser mercadorias ou passageiros
 4. A relação employees2 cujo esquema é igual ao da relação employees.
 
-Nota: quando não sabemos se uma relação existe podemos usar a cláusula ```IF NOT EXIST``` para apenas criar caso a relação ainda não exista
+Nota: quando não sabemos se uma relação existe podemos usar a cláusula ```IF NOT EXISTS``` para apenas criar caso a relação ainda não exista
 Exemplo:
 ``` sql
-CREATE TABLE IF NOT EXIST pessoa (
+CREATE TABLE IF NOT EXISTS pessoa (
   nif CHAR(9),
   nome VARCHAR(50),
   PRIMARY KEY(nif)
@@ -166,7 +166,7 @@ nota: podemos expliciar a ordem acrescentando ```FIRST``` para modificar ordem p
 Podemos também modificar nome de atributos, exemplo mudar ```telefone``` para ```tel```
 ``` sql
 ALTER TABLE pessoa
-MODIFY telefone tel CHAR(9);
+CHANGE COLUMN telefone tel CHAR(9);
 ```
 
 ### Exercícios
