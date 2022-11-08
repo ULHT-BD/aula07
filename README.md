@@ -14,7 +14,7 @@ Bom trabalho!
 
 [5. ALTER TABLE](#5-alter-table)
 
-[6. SELECT INTO](#6-select-into)
+[6. INSERT INTO SELECT](#6-insert-into-select)
 
 [7. Trabalho de Casa](#7-trabalho-de-casa)
 
@@ -175,11 +175,11 @@ Para cada uma das alíneas seguintes, escreva a query que permite obter. Introdu
 2. Adicione à relação viatura o nome do proprietário e o nif do proprietário
 3. Altere o nome próprio da pessoa para que possa conter 200 caracteres e adicione um atributo para alcunha.
 
-## 6. SELECT INTO
-A cláusula ```SELECT INTO``` permite executar uma query numa relação e adicionar o resultado numa nova relação (ou existente)
+## 6. INSERT INTO SELECT
+A cláusula ```INSERT INTO SELECT``` permite executar uma query numa relação e inserir o resultado numa outra relação
 ``` sql
+INSERT INTO nova_relacao
 SELECT col1, col2, ...
-INTO nova_relacao
 FROM antiga_relacao
 WHERE condição;
 ```
