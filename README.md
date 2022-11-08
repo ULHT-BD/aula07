@@ -6,11 +6,11 @@ Bom trabalho!
 
 [1. CREATE TABLE](#1-create-table)
 
-[2. Tipos de Dados](#2-tipos-de-dados)
+[2. Tipos de Dados](#2-tipo-de-dados)
 
 [3. Restrições de Integridade](#3-restrições-de-integridade)
 
-[4. DESCRIBE and SHOW CREATE TABLE](#4-describe-and-show-create-table)
+[4. DESCRIBE e SHOW CREATE TABLE](#4-describe-e-show-create-table)
 
 [5. ALTER TABLE](#5-alter-table)
 
@@ -57,8 +57,47 @@ CREATE TABLE pessoa (
 );
 ```
 
+Podemos apagar relações (removendo também todo o seu conteúdo) recorrendo à instrução ```DROP TABLE```
+
+Exemplo
+``` sql
+DROP TABLE pessoa;
+```
+
 ## 2. Tipo de Dados
-Nas aulas anteriores
+Uma base de dados pode conter vários tipos de dados diferentes. Na (aula 5)[https://github.com/ULHT-BD/aula05], usámos já várias funções de linha que permitem manipular e efetuar operações com os principais tipos de dados numéricos, texto ou datas.
+
+Quando definimos uma relação, no seu esquema, devemos definir o domínio (ou tipo de dados) de cada um dos seus atributos. O domínio é definido tendo em conta o tipo de dados que queremos representar, tamanho e operações que iremos efetuar sobre eles.
+
+Em MySQL, podemos definir atributos de vários tipos numéricos:
+![image](https://user-images.githubusercontent.com/32137262/200440871-ef59a65d-916c-4fbc-9dad-4f1a1e778b56.png)
+
+Podemos ainda usar ```FLOAT```, números de vírgula flutuante simples de 32B e ```DOUBLE``` números de vírgula flutuante duplos 64B.
+
+Podemos guardar valores de texto:
+|Tipo|Descrição|
+|---------|---------|
+|```CHAR```|Sequência de caracteres de comprimento fixo|
+|```VARCHAR```|Sequência de caracteres de comprimento variável|
+|```TEXT```|Sequência de caracteres de comprimento variável longo (existem também ```TINYTEXT, MEDIUMTEXT, LONGTEXT```)|
+
+
+Podemos ainda guardar valores de data e hora:
+|Tipo|Descrição|
+|---------|---------|
+|```DATE```|Guarda a data no formato ano-mês-dia, e.g. 2022-11-08|
+|```TIME```|Guarda a hora no formato hora:min:seg, e.g. 08:05:00|
+|```DATETIME```|Guarda a data e hora no formato ano-mês-dia hora:minuto:segundo, e.g. 2022-11-08 08:05:00|
+|```YEAR```|Guarda o ano, e.g. 2022|
+
+Existem vários (outros)[https://dev.mysql.com/doc/refman/8.0/en/data-types.html] tipos de dados, por exemplo JSON, espaciais, etc.
+
+### Exercícios
+Qual o tipo de dados que utilizaria para representar:
+1. Nome próprio e apelido
+2. NIF, cartao do cidadão, telefone ou código postal
+3. Idade, salário, data de nascimento
+
 
 ## 3. Restrições de Integridade
 Restrições de integridade são um conjunto de regras que queremos impôr ao nosso modelo de dados para garantir que o modelo de dados é válido (e.g. qualquer cidadão possui obrigatóriamente um número de cartão de cidadão, um número único e diferente para cada cidadão). Estas regras devem ser codificadas em SQL de forma a impôr a sua obrigatoriedade durante inserção ou manipulação dos dados.
@@ -72,166 +111,92 @@ Importante referir quatro restrições de integridade que podemos impôr em SQL:
 |Check|```CHECK(condição)```|O valor na coluna deve respeitar a condição indicada|
 
 ### Exercícios
-Para cada uma das alíneas seguintes, escreva a query que permite obter:
-1. Para cada empregado apresente o seu nome, salário e indicação sobre se o seu salário está "acima da média" caso seja superior a 6500 ou "abaixo da média" no caso contrário 
-2. Para cada empregado apresente o seu nome, salário e qual o seu periodo de contratação sendo: "1º período" se até 2002 (incluindo), "2º período" entre 2002 e 2004 (incluindo), "3 período" entre 2004 e 2006 (incluindo) e "4º período" nos restantes casos. Ordene por ordem decrescente de salário
+Para cada uma das alíneas seguintes, escreva a query que permite criar e teste seguidamente inserir valores que não respeitam as restrições definidas:
+1. A relação aluno(cartao_cidadao, nif, nome, apelido, email, idade), a idade deve ser superior a 18 e inferior a 100
+2. A relação empregado(nome_proprio, apelido, nif, cartao_cidadao, niss, telefone, salario, rua, codigo_postal), o salário deve ser superior ao salário mínimo
+3. A relação veiculo(matricula, tipo, marca, modelo, ano), onde a marca pode ser VW, Renault, Tesla ou BMW e tipo pode ser mercadorias ou passageiros
+4. A relação employees2 cujo esquema é igual ao da relação employees.
 
-
-## 2. Conversão de Tipos de Dados
-Verificámos, nas aulas anteriores, que podemos usar em SQL vários tipos de dados (e.g. texto, numérico, data). O SQL disponibiliza funções que permitem efetuar conversões entre os tipos de dados.
-
-A sintaxe é 
+Nota: quando não sabemos se uma relação existe podemos usar a cláusula ```IF NOT EXIST``` para apenas criar caso a relação ainda não exista
+Exemplo:
 ``` sql
-CREATE TABLE nome_relacao (
- definicao_coluna1,
- definicao_coluna2,
- ...,
- restricoes_integridade
-)
+CREATE TABLE IF NOT EXIST pessoa (
+  nif CHAR(9),
+  nome VARCHAR(50),
+  PRIMARY KEY(nif)
+);
 ```
 
-
-Podemos usar os operadores:
-|Função|Descrição|Exemplo|
-|--------|---------|-------|
-|FORMAT|Converter um número para uma string com n casas decimais|Apresentar nota final como string com 2 casas decimais: ```SELECT FORMAT(nota_final, 2) FROM aluno;```|
-|CAST|Converter um valor num dado tipo de dados (DATE, DATETIME, TIME, CHAR, SIGNED, UNSIGNED, BINARY)|Apresentar nota final como string com 2 casas decimais: ```SELECT CAST(ROUND(nota_final, 2) AS CHAR) FROM aluno;```|
-
-### Exercícios
-Para cada uma das alíneas seguintes, escreva a query que permite obter:
-1. O valor do salário dos trabalhadores incluindo a respetiva comissão como string com duas casas decimais
-2. A data '2022-10-25 8:00:00' como data e hora, assim como qual será a data após 27 dias
-
-
-## 3. Funções de Agregação
-As funções de agregação são funções que são aplicadas sobre um conjunto de tuplos e retornam um único valor. Várias funções existem:
-|Função|Descrição|Exemplo|
-|--------|---------|-------|
-|MIN, MAX|Obter o valor máximo ou mínimo|Qual o aluno mais velho e mais novo: ```SELECT MAX(idade) mais_velho, MIN(idade) mais_novo FROM alunos;```|
-|AVG|Calcular o valor médio de um conjunto de valores|Qual a idade média dos alunos: ```SELECT AVG(idade) FROM alunos;```|
-|COUNT|Contar o número de ocorrências de tuplos diferentes de NULL|Quantos alunos existem e para quantos conhecemos a idade: ```SELECT COUNT(eid) total_alunos, COUNT(idade) idade_conhecida FROM alunos;```|
-|SUM|Calcular a soma de valores de um conjunto de tuplos|Qual a soma das classificacoes do aluno numero 213: ```SELECT SUM(nota_exercicio) FROM alunos WHERE eid = 213;```|
-
-### Exercícios
-Para cada uma das alíneas seguintes, escreva a query que permite obter:
-1. Qual o salário base mínimo, máximo e médio recebido pelos empregados
-2. Quantos empregados recebem alguma comissão, quantos recebem uma comissão acima de 25% e quantos não recebem qualquer comissão
-3. Qual o salário mínimo, máximo e médio recebido pelos empregados com e sem comissão
-
-
-## 4. GROUP BY
-A cláusula ```GROUP BY``` permite aplicar funções de agregação agrupando por subconjuntos segundo um ou vários atributos. A sintaxe é:
-
-``` sql
- SELECT FUNCAO(atributo), atributo-1
- FROM relação
- WHERE condição
- GROUP BY atributo-1, ..., atributo-n
-```
+## 4. DESCRIBE e SHOW CREATE TABLE
+As cláusulas ```DESCRIBE``` e ```SHOW CREATE TABLE``` permitem inspecionar a estrutura de uma relação já existente.
 
 Exemplo:
-
-Qual a idade média para cada nome próprio dos alunos
 ``` sql
- SELECT nome, AVG(idade)
- FROM alunos
- GROUP BY nome
+SHOW CREATE TABLE pessoa;
+```
+
+### Exercícios
+Utilize a cláusula ```DESCRIBE``` e ```SHOW CREATE TABLE``` para verificar a estrutura da relação employees e compare com a employees2 que criou para verificar que são identicas.
+
+
+## 5. ALTER TABLE
+A Cláusula ```ALTER TABLE``` permite alterar o esquema de uma relação, nomeadamente renomear a tabela, adicionar ou alterar atributos. 
+
+Exemplo, para alterar o nome da relação pessoa para cidadao:
+``` sql
+ALTER TABLE pessoa
+RENAME TO cidadao;
+```
+
+Podemos adicionar atributos utilizando a cláusula ```ADD```
+``` sql
+ALTER TABLE pessoa
+ADD telefone CHAR(9);
+```
+nota: podemos expliciar a ordem acrescentando ```FIRST``` para adicionar como primeira coluna ou ```AFTER col``` para adicionar após a coluna col. Podemos adicionar várias colunas utilizando uma cláusula ```ADD``` para cada coluna a adicionar.
+
+
+Podemos modificar atributos utilizando a cláusula ```MODIFY```
+``` sql
+ALTER TABLE pessoa
+MODIFY telefone CHAR(12);
+```
+nota: podemos expliciar a ordem acrescentando ```FIRST``` para modificar ordem para primeira coluna ou ```AFTER col``` ou para para após a coluna col. Podemos modificar várias colunas utilizando uma cláusula ```MODIFY``` para cada coluna a modificar.
+
+Podemos também modificar nome de atributos, exemplo mudar ```telefone``` para ```tel```
+``` sql
+ALTER TABLE pessoa
+MODIFY telefone tel CHAR(9);
+```
+
+### Exercícios
+Para cada uma das alíneas seguintes, escreva a query que permite obter. Introduza valores para testar:
+1. Altere o nome da relação viatura para automóvel e o atributo tipo para transporte
+2. Adicione à relação viatura o nome do proprietário e o nif do proprietário
+3. Altere o nome próprio da pessoa para que possa conter 200 caracteres e adicione um atributo para alcunha.
+
+## 6. SELECT INTO
+A cláusula ```SELECT INTO``` permite executar uma query numa relação e adicionar o resultado numa nova relação (ou existente)
+``` sql
+SELECT col1, col2, ...
+INTO nova_relacao
+FROM antiga_relacao
+WHERE condição;
 ```
 
 ### Exercícios
 Para cada uma das alíneas seguintes, escreva a query que permite obter:
-1. Qual o salário base mínimo, máximo e médio recebido pelos empregados para cada função ordenado por salário médio
-2. Para cada departamento, quantos empregados recebem alguma comissão, quantos recebem uma comissão acima de 25% e quantos não recebem qualquer comissão
-3. Para cada departamento indique a distribuição dos nomes por número de caracteres do nome próprio nos seguintes grupos: quantos trabalhadores têm menos até 3 caracteres, entre 3 e 5, entre 5 e 7 ou mais de 7.
-
-
-## 5. HAVING
-Não podemos usar a cláusula WHERE para filtrar tuplos com base no valor das funções de agregação. Em alternativa, a cláusula HAVING permite filtrar tuplos segundo o valor de funções de agregação. A sintaxe é:
-
-``` sql
- SELECT FUNCAO(atributo), atributo-1
- FROM relação
- WHERE condição
- GROUP BY atributo-1, ..., atributo-n
- HAVING condição-FUNCAO(atributo)
-```
-
-Exemplo:
-
-Quais os nomes de alunos e respetiva idade média quando esta é superior a 23
-``` sql
- SELECT nome, AVG(idade)
- FROM alunos
- GROUP BY nome
- HAVING AVG(idade) > 23
-```
-
-### Exercícios
-Para cada uma das alíneas seguintes, escreva a query que permite obter:
-1. Qual o salário base mínimo, máximo e médio recebido pelos empregados para cada função ordenado por salário médio apenas para os empregos onde o salário médio esteja entre 10000 e 15000
-2. Para cada departamento que empregue pelo menos 6 empregados, quantos empregados recebem alguma comissão, quantos recebem uma comissão acima de 25% e quantos não recebem qualquer comissão
-3. Para cada departamento indique a distribuição dos nomes por número de caracteres do nome próprio nos seguintes grupos: quantos trabalhadores têm até 3 caracteres, entre 3 e 5, entre 5 e 7 ou mais de 7 para os departamentos tenham algum trabalhador cujo nome tenha pelo menos 9 catacteres.
-
-## 6. Operações UNION, INTERSECT e MINUS
-Em SQL podemos efetuar operações entre vários conjuntos. 
-![image](https://user-images.githubusercontent.com/32137262/197638351-749da169-af37-4809-b1e3-b0e8f4d3fc2f.png)
-
-Exemplos:
-|Operador|Descrição|Exemplo|
-|--------|---------|-------|
-|UNION|Conjunto de tuplos que estão no primeiro e/ou no segundo conjunto, sem duplicados|Obter diferentes nomes de alunos e nomes de professores: ```SELECT nome FROM alunos UNION SELECT nome FROM professores;```|
-|UNION ALL|Conjunto de tuplos que estão no primeiro e/ou no segundo conjunto, incluindo duplicados|Obter nomes de alunos e nomes de professores mantendo repetições entre grupos: ```SELECT nome FROM alunos UNION ALL SELECT nome FROM professores;```|
-|INTERSECT|Obter nomes de alunos que também são nomes de professores: ```SELECT nome FROM alunos INTERSECT SELECT nome FROM professores;```|
-
-```MINUS``` não existe em MySQL mas veremos como podemos implementar utilizando o ```LEFT JOIN``` na aula 10.
-
-### Exercícios
-Para cada uma das alíneas seguintes, escreva a query que permite obter:
-1. Uma única lista com os nomes próprios e os apelidos de todos os trabalhadores
-2. A lista de nomes próprios que sejam nome de pelo menos um trabalhador que recebe comissão e de um trabalhador que não recebe
-
+1. Copiar o conteúdo da relação employees para employees2 para empregados cujo o salário estiver entre 3000 e 8000 e a data de contratação for posterior a 1 de janeiro de 2008.
+2. Copiar os nomes próprios, apelidos e salário de employees para a relação empregado, para os empregados cujo nome começa por 'a' e que recebem alguma comissão.
 
 ## 7. Trabalho de Casa
-Para cada uma das alíneas seguintes, escreva a query que permite obter:
-
-1. Para cada região (id de região), qual o número total de países, bem como o tamanho mínimo, médio e máximo em número de caracteres do nome dos países.
-
-2. Para cada ano, quais as funções (JOB_ID) para as quais foram contratados mais do que um empregado e qual a quantidade.
-
-Exemplo de resultado parcial:
-|ANO|FUNCAO|QTD|
-|----|--------|-|
-|2003|ST_CLERK|2|
-|2004|SA_REP|4|
-|2004|SH_CLERK|2|
-|2005|FI_ACCOUNT|2|
-|2005|PU_CLERK|2|
-|2005|SA_MAN|2|
-|2005|SA_REP|8|
-|2005|SH_CLERK|4|
-|...|...|...|
-
-3. Para cada letra vogal (a,e,i,o,u), quantos nomes próprios contêm pelo menos uma ocorrência dessa vogal
-
-Exemplo de resultado para uma lista de nomes (Pedro, Teresa, Joana, Marta):
-|a|3|
-|-|-|
-|e|2|
-|i|0|
-|o|2|
-|u|0|
-
-Bom trabalho!
-
-SUGESTÃO: se o problema parecer difícil ou estiver com dificuldades em obter o resultado final correto, tente subdividir o problema em partes obtendo isoladamente cada uma das condições pedidas.
-
-NOTA: submeta a sua resposta ao trabalho de casa no moodle, um exercício por linha, num ficheiro de texto com o nome TPC_a06_[N_ALUNO].sql (exemplo: TPC_a06_12345.sql para o aluno número 12345).
+(a publicar)
 
 ## Bibliografia e Referências
-* [w3schools - MySQL WHERE Clause](https://www.w3schools.com/mysql/mysql_where.asp)
-* [w3schools - MySQL IN Operator](https://www.w3schools.com/mysql/mysql_in.asp)
-* [w3schools - MySQL LIKE Operator](https://www.w3schools.com/mysql/mysql_like.asp)
-* [geeksforgeeks - Regular Expressions REGEXP](https://www.geeksforgeeks.org/mysql-regular-expressions-regexp/)
+* [mysqltutorial - CREATE TABLE](https://www.mysqltutorial.org/mysql-create-table/)
+* [mysqltutorial - Data Types](https://www.mysqltutorial.org/mysql-data-types.aspx)
+* [MySQL - Data Types](https://dev.mysql.com/doc/refman/8.0/en/data-types.html)
+* [mysqltutorial - Storage Engines](https://www.mysqltutorial.org/understand-mysql-table-types-innodb-myisam.aspx)
 * [w3schools - MySQL Functions](https://www.w3schools.com/mysql/mysql_ref_functions.asp)
 
 ## Outros
