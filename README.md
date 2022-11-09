@@ -210,7 +210,7 @@ DROP CONSTRAINT pessoa_ColumnConstraint;
 Para cada uma das alíneas seguintes, escreva a query que permite obter. Introduza valores para testar:
 1. Altere o nome da relação veiculo para automóvel e o atributo tipo para transporte
 2. Adicione à relação viatura o nome do proprietário e o nif do proprietário
-3. Altere o nome próprio da pessoa para que possa conter 200 caracteres e adicione um atributo para alcunha.
+3. Na relação veiculo, altere o nome próprio do proprietário para que possa conter 200 caracteres e adicione um atributo para alcunha.
 
 ## 6. INSERT INTO SELECT
 A cláusula ```INSERT INTO SELECT``` permite executar uma query numa relação e inserir o resultado numa outra relação
@@ -223,7 +223,7 @@ WHERE condição;
 
 ### Exercícios
 Para cada uma das alíneas seguintes, escreva a query que permite obter:
-1. Copiar o conteúdo da relação employees para employees2 para empregados cujo o salário estiver entre 3000 e 8000 e a data de contratação for posterior a 1 de janeiro de 2008.
+1. Copiar o conteúdo da relação employees para employees2 para empregados cujo o salário esteja entre 3000 e 8000 e a data de contratação seja posterior a 1 de janeiro de 2008.
 2. Copiar os nomes próprios, apelidos e salário de employees para a relação empregado, para os empregados cujo nome começa por 'a' e que recebem alguma comissão.
 
 ## 7. Trabalho de Casa
