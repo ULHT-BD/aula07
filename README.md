@@ -48,6 +48,11 @@ onde cada definição de coluna é definida por
 nome_coluna tipo_dados [restricoes_integridade]
 ```
 
+e cada restrição de integridade pode ser definida por
+``` sql
+[CONSTRAINT nome] restricao_integridade
+```
+
 Exemplo:
 ``` sql
 CREATE TABLE pessoa (
@@ -110,6 +115,20 @@ Importante referir quatro restrições de integridade que podemos impôr em SQL:
 |Not Null|```NOT NULL```|Um valor tem de ser obrigatoriamente atribuido à coluna em questão. Não pode ser ```NULL```|
 |Check|```CHECK(condição)```|O valor na coluna deve respeitar a condição indicada|
 
+Exemplo:
+``` sql
+CREATE TABLE pessoa (
+  nif CHAR(9),
+  cartao_cidadao CHAR(8),
+  nome VARCHAR(50) NOT NULL,
+  idade TINYINT,
+  CONSTRAINT pessoa_PrimaryKey PRIMARY KEY(nif),
+  CONSTRAINT pessoa_CandidateKey UNIQUE(cartao_cidadao),
+  CONSTRAINT pessoa_ColumnConstraint CHECK(idade >= 0 AND idade<150)
+);
+```
+
+
 ### Exercícios
 Para cada uma das alíneas seguintes, escreva a query que permite criar e teste seguidamente inserir valores que não respeitam as restrições definidas:
 1. A relação aluno(cartao_cidadao, nif, nome, apelido, email, idade), a idade deve ser superior a 18 e inferior a 100
@@ -155,6 +174,12 @@ ADD telefone CHAR(9);
 ```
 nota: podemos expliciar a ordem acrescentando ```FIRST``` para adicionar como primeira coluna ou ```AFTER col``` para adicionar após a coluna col. Podemos adicionar várias colunas utilizando uma cláusula ```ADD``` para cada coluna a adicionar.
 
+A operação inversa ```DROP``` permite remover uma coluna da relação
+``` sql
+ALTER TABLE pessoa
+DROP telefone;
+```
+
 
 Podemos modificar atributos utilizando a cláusula ```MODIFY```
 ``` sql
@@ -167,6 +192,18 @@ Podemos também modificar nome de atributos, exemplo mudar ```telefone``` para `
 ``` sql
 ALTER TABLE pessoa
 CHANGE COLUMN telefone tel CHAR(9);
+```
+
+Podemos ainda usar o ```ALTER TABLE``` adicionar restrições de integridade a relações existentes utilizando a sintaxe ```ADD CONSTRAINT nome restricao_integridade```, exemplo:
+``` sql
+ALTER TABLE pessoa
+ADD CONSTRAINT pessoa_ColumnConstraint CHECK(idade >= 0 AND idade<150);
+```
+
+A operação inversa ```DROP CONSTRAINT``` permite remover uma restrição da relação
+``` sql
+ALTER TABLE pessoa
+DROP CONSTRAINT pessoa_ColumnConstraint;
 ```
 
 ### Exercícios
@@ -190,7 +227,22 @@ Para cada uma das alíneas seguintes, escreva a query que permite obter:
 2. Copiar os nomes próprios, apelidos e salário de employees para a relação empregado, para os empregados cujo nome começa por 'a' e que recebem alguma comissão.
 
 ## 7. Trabalho de Casa
-(a publicar)
+Para cada uma das alíneas seguintes, escreva a query que permite obter:
+
+1. 
+
+2. 
+
+3. 
+
+
+
+Bom trabalho!
+
+SUGESTÃO: se o problema parecer difícil ou estiver com dificuldades em obter o resultado final correto, tente subdividir o problema em partes obtendo isoladamente cada uma das condições pedidas.
+
+NOTA: submeta a sua resposta ao trabalho de casa no moodle, um exercício por linha, num ficheiro de texto com o nome TPC_a07_[N_ALUNO].sql (exemplo: TPC_a07_12345.sql para o aluno número 12345).
+
 
 ## Bibliografia e Referências
 * [mysqltutorial - CREATE TABLE](https://www.mysqltutorial.org/mysql-create-table/)
