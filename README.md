@@ -70,7 +70,7 @@ DROP TABLE pessoa;
 ```
 
 ## 2. Tipo de Dados
-Uma base de dados pode conter vários tipos de dados diferentes. Na (aula 5)[https://github.com/ULHT-BD/aula05], usámos já várias funções de linha que permitem manipular e efetuar operações com os principais tipos de dados numéricos, texto ou datas.
+Uma base de dados pode conter vários tipos de dados diferentes. Na [aula 5](https://github.com/ULHT-BD/aula05), usámos já várias funções de linha que permitem manipular e efetuar operações com os principais tipos de dados numéricos, texto ou datas.
 
 Quando definimos uma relação, no seu esquema, devemos definir o domínio (ou tipo de dados) de cada um dos seus atributos. O domínio é definido tendo em conta o tipo de dados que queremos representar, tamanho e operações que iremos efetuar sobre eles.
 
@@ -95,7 +95,7 @@ Podemos ainda guardar valores de data e hora:
 |```DATETIME```|Guarda a data e hora no formato ano-mês-dia hora:minuto:segundo, e.g. 2022-11-08 08:05:00|
 |```YEAR```|Guarda o ano, e.g. 2022|
 
-Existem vários (outros)[https://dev.mysql.com/doc/refman/8.0/en/data-types.html] tipos de dados, por exemplo JSON, espaciais, etc.
+Existem vários [outros](https://dev.mysql.com/doc/refman/8.0/en/data-types.html) tipos de dados, por exemplo JSON, espaciais, etc.
 
 ### Exercícios
 Qual o tipo de dados que utilizaria para representar:
