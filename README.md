@@ -227,13 +227,7 @@ Para cada uma das alíneas seguintes, escreva a query que permite obter:
 2. Copiar os nomes próprios, apelidos e salário de employees para a relação empregado, para os empregados cujo nome começa por 'a' e que recebem alguma comissão.
 
 ## 7. Trabalho de Casa
-Para cada uma das alíneas seguintes, escreva a query que permite obter:
-
-1. 
-
-2. 
-
-3. 
+(a publicar)
 
 
 
