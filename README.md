@@ -208,7 +208,7 @@ DROP CONSTRAINT pessoa_ColumnConstraint;
 
 ### Exercícios
 Para cada uma das alíneas seguintes, escreva a query que permite obter. Introduza valores para testar:
-1. Altere o nome da relação viatura para automóvel e o atributo tipo para transporte
+1. Altere o nome da relação veiculo para automóvel e o atributo tipo para transporte
 2. Adicione à relação viatura o nome do proprietário e o nif do proprietário
 3. Altere o nome próprio da pessoa para que possa conter 200 caracteres e adicione um atributo para alcunha.
 
