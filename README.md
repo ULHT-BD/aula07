@@ -227,8 +227,9 @@ Para cada uma das alíneas seguintes, escreva a query que permite obter:
 2. Copiar os nomes próprios, apelidos e salário de employees para a relação empregado, para os empregados cujo nome começa por 'a' e que recebem alguma comissão.
 
 ## 7. Trabalho de Casa
-(a publicar)
+1. Observe o conjunto de dados disponibilizados no ficherio xls pela Plataforma de Dados Abertos da Câmara Municipal de Lisboa sobre [Contratos de empreitadas de obras públicas e contratos de aquisição de serviços](https://dados.cm-lisboa.pt/dataset/538fedd0-69f8-464b-85c3-08bd2ecde103/resource/23aa7744-844c-49e5-9643-74855c25055c/download/contratos-de-empreitadas-de-obras-publicas-e-de-aquisicao-de-servicos.xlsx). Escreva o código SQL que permite criar uma tabela que permita guardar os dados tendo em atenção o tipo de dados e restrições de integridade adequado a cada coluna. Escolha 5 contratos de empreitada do ficheiro de dados e escreva o código para inserir os tuplos escolhidos.
 
+2. Escreva o código SQL que permite obter, para cada Entidade(s) Adjudicatária(s), o número de contratos celebrados, o preço contratual total e médio e o preço total efetivo total e médio.
 
 
 Bom trabalho!
