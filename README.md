@@ -18,6 +18,8 @@ Bom trabalho!
 
 [7. Trabalho de Casa](#7-trabalho-de-casa)
 
+[8. Resoluções](#8-resoluções)
+
 [Bibliografia e Referências](#bibliografia-e-referências)
 
 [Outros](#outros)
@@ -240,6 +242,12 @@ Bom trabalho!
 SUGESTÃO: se o problema parecer difícil ou estiver com dificuldades em obter o resultado final correto, tente subdividir o problema em partes obtendo isoladamente cada uma das condições pedidas.
 
 NOTA: submeta a sua resposta ao trabalho de casa no moodle, um exercício por linha, num ficheiro de texto com o nome TPC_a07_[N_ALUNO].sql (exemplo: TPC_a07_12345.sql para o aluno número 12345).
+
+
+## 8. Resoluções
+[Resolução dos exercícios em aula](https://github.com/ULHT-BD/aula07/blob/main/aula07_resolucao.sql)
+
+[Resolução do trabalho de casa](https://github.com/ULHT-BD/aula07/blob/main/TPC_a07_resolucao.sql)
 
 
 ## Bibliografia e Referências
